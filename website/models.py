@@ -23,6 +23,8 @@ class Event(models.Model):
     event_category = models.CharField(max_length=50, choices=categories)
     is_approved = models.BooleanField(default=False)
 
+    event_owner = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+
     latitude = models.FloatField(blank=True, null=True)
     longitude = models.FloatField(blank=True, null=True)
 
