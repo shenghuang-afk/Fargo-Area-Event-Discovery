@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from website.models import Event
 
-# Create your views here.
+
 # def login_user(request):
 #     if request.method == "POST":
     
