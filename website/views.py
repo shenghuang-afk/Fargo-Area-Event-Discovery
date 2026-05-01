@@ -55,7 +55,7 @@ def user_events(request, user_id):
         user_event_list = Event.objects.filter(event_owner=user_id)
         user_event_dict = {'events': user_event_list}
         return render(request, 'user_events.html', user_event_dict)
-    else:
+    else:4
         return redirect('login')
     
 # View for creating a new event
@@ -81,7 +81,7 @@ def add_event(request):
             new_event.save()
             return redirect('user_events', user_id=request.user.id)
         else:
-            return render(request, 'addEvent.html')
+            return render(request, 'website/addEvent.html')
     else:
         return redirect('login')
     
@@ -111,6 +111,6 @@ def update_event(request, event_id):
         else:
             # Display form with existing event data
             context = {'event': event}
-            return render(request, 'updateEvent.html', context)
+            return render(request, 'website/updateEvent.html', context)
     else:
         return redirect('login')
