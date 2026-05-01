@@ -22,7 +22,6 @@ from website import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('website.urls')),
-    path('add-event/', views.add_event, name='add_event'),
-    path('update-event/<int:event_id>/', views.update_event, name='update_event'),
-    
+    path('add-event/', views.add_event, name='addEvent'),
+    path('update-event/<int:event_id>/', views.update_event, name='updateEvent'),
 ]
