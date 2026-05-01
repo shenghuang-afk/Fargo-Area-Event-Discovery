@@ -56,7 +56,7 @@ def user_events(request, user_id):
         user_event_list = Event.objects.filter(event_owner=user_id)
         user_event_dict = {'events': user_event_list}
         return render(request, 'user_events.html', user_event_dict)
-    else:4
+    else:
         return redirect('login')
     
 # View for creating a new event
