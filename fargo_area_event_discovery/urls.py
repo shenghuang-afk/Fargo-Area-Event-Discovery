@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+
 from website import views
 
 urlpatterns = [
@@ -23,4 +24,6 @@ urlpatterns = [
     path('', include('website.urls')),
     path('add-event/', views.add_event, name='add_event'),
     path('update-event/<int:event_id>/', views.update_event, name='update_event')
+    path('add-event/', views.add_event, name='addEvent'),
+    path('update-event/<int:event_id>/', views.update_event, name='updateEvent'),
 ]
