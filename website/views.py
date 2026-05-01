@@ -3,16 +3,22 @@ from urllib import request
 from django.shortcuts import get_object_or_404, render, redirect
 from .models import Event
 from website.models import Event
+from django.utils import timezone
 
 
 # Create your views here.
 # website/views.py
+from django.utils import timezone
+
 def event_list(request):
     events = Event.objects.filter(is_approved=True).order_by('event_date')
-    
-    category_query = request.GET.get('category')
-    if category_query:
-        events = events.filter(event_category__iexact=category_query)
+
+    category = request.GET.get('category')
+    if category:
+        events = events.filter(event_category__icontains=category)
+
+    if request.GET.get('upcoming') == 'true':
+        events = events.filter(event_date__gte=timezone.now())
 
     return render(request, 'website/event_list.html', {'events': events})
 

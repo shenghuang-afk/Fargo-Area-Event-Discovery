@@ -1,1 +1,35 @@
-<h1>Event Detail Working</h1>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 1. Add Leaflet CSS to the <head> -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <!-- 2. Replace your placeholder <div> with this map container -->
+    <div id="event-map" style="height: 300px; width: 100%; border-radius: 8px;" class="shadow-sm"></div>
+
+    <!-- 3. Add Leaflet JS before the </body> tag -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script>
+      // Use quotes around the Django tag and then convert to a Number
+      // This prevents the "Unknown Token" error if the value is empty
+      var lat = Number('{{ event.latitude|default:46.8772 }}')
+      var lon = Number('{{ event.longitude|default:-96.7898 }}')
+      var eventName = "{{ event.event_name|default:'Test Event'|escapejs }}"
+      
+      // Initialize the map
+      var map = L.map('event-map').setView([lat, lon], 13)
+      
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+      }).addTo(map)
+      
+      L.marker([lat, lon]).addTo(map).bindPopup(eventName).openPopup()
+    </script>
+  </body>
+</html>
