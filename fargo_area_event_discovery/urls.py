@@ -24,4 +24,5 @@ urlpatterns = [
     path('', include('website.urls')),
     path('add-event/', views.add_event, name='add_event'),
     path('update-event/<int:event_id>/', views.update_event, name='update_event'),
+    
 ]
