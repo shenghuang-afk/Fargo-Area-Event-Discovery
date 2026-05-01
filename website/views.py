@@ -38,6 +38,7 @@ def update_event_status(request, event_id, status):
     event.save()
     return redirect('admin_dashboard')
 #Admin dashboard view with superuser access control
+
 from website.models import Event
 
 # Create your views here.
