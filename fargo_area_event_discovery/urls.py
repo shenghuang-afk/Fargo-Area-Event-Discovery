@@ -17,7 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from website import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+<<<<<<< HEAD
     path('', include('website.urls')),
+=======
+    path('add-event/', views.add_event, name='add_event'),
+    path('update-event/<int:event_id>/', views.update_event, name='update_event')
+>>>>>>> 43f8fd0a147fa2a7986ddc2954a464bb652941f3
 ]
