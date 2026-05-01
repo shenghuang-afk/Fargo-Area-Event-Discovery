@@ -28,6 +28,9 @@ class Event(models.Model):
     latitude = models.FloatField(blank=True, null=True)
     longitude = models.FloatField(blank=True, null=True)
 
+    def __str__(self):
+        return self.event_name
+
     class Meta:
         ordering = ['event_date']
 
