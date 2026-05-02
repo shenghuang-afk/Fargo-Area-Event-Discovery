@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test
 from .models import Event
+from django.contrib.auth.forms import UserCreationForm
 
 def home(request):
     events = Event.objects.all()
@@ -43,14 +44,45 @@ def update_event_status(request, event_id, status):
 from website.models import Event
 
 
-# def login_user(request):
-#     if request.method == "POST":
-    
-#     username_var = request.POST["username"]
-#     password_var = request.POST["password"]
+def login_user(request):
+    if request.method == "POST":
+        username_var = request.POST["username"]
+        password_var = request.POST["password"]
 
-#     user = authenticate(username = username_var, password = password_var)
+        user = authenticate(username=username_var, password=password_var)
 
+        if user is not None:
+            login(request, user)
+            messages.success(request, "Welcome back!")
+
+            if user.is_superuser:
+                return redirect("admin_dashboard")
+            return redirect("home")
+        else:
+            messages.error(request, "Invalid username or password. Please try again.")
+            return redirect("login")
+
+    return render(request, "website/login.html", {})
+
+def logout_user(request):
+    logout(request)
+    messages.success(request, "You have been logged out.")
+    return redirect("home")
+
+def register_user(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, "Account created.")
+            return redirect("home")
+        else:
+            messages.error(request, "Registration failed")
+    else:
+        form = UserCreationForm()
+
+    return render(request, "website/register.html", {"form": form})
 
 
 
