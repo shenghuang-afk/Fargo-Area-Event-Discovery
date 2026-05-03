@@ -23,16 +23,10 @@ class Event(models.Model):
         ('rejected', 'Rejected'),
     ]
 
-    name = models.CharField(max_length=100)
-    category = models.CharField(max_length=50)
-    area = models.CharField(max_length=100)
-    location = models.CharField(max_length=100)
-    date_time = models.DateTimeField()
-    information = models.TextField()
     status = models.CharField( max_length=20, choices=STATUS_CHOICES, default='review')
 
     def __str__(self):
-        return self.name
+        return self.event_name
     #Admin page
 
     event_id = models.AutoField(primary_key=True)
@@ -40,10 +34,14 @@ class Event(models.Model):
     event_date = models.DateTimeField()
     event_location = models.CharField(max_length=255)
     event_category = models.CharField(max_length=50, choices=categories)
+    event_description = models.TextField(default="")
+
     is_approved = models.BooleanField(default=False)
 
     latitude = models.FloatField(blank=True, null=True)
     longitude = models.FloatField(blank=True, null=True)
+
+    event_owner = models.ForeignKey('auth.User', on_delete=models.CASCADE, null=True, blank=True)
 
     class Meta:
         ordering = ['event_date']
