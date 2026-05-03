@@ -16,6 +16,25 @@ class Event(models.Model):
         ('social', 'Social')
     ]
 
+    # Admin page 
+    STATUS_CHOICES = [
+        ('review', 'In Review'),
+        ('accepted', 'Accepted'),
+        ('rejected', 'Rejected'),
+    ]
+
+    name = models.CharField(max_length=100)
+    category = models.CharField(max_length=50)
+    area = models.CharField(max_length=100)
+    location = models.CharField(max_length=100)
+    date_time = models.DateTimeField()
+    information = models.TextField()
+    status = models.CharField( max_length=20, choices=STATUS_CHOICES, default='review')
+
+    def __str__(self):
+        return self.name
+    #Admin page
+
     event_id = models.AutoField(primary_key=True)
     event_name = models.CharField(max_length=255)
     event_date = models.DateTimeField()
@@ -37,3 +56,4 @@ class Event(models.Model):
                 self.latitude = location.latitude
                 self.longitude = location.longitude
         super().save(*args, **kwargs)
+

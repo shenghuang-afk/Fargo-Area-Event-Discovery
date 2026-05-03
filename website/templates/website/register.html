@@ -1,0 +1,41 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                    
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h3 class="text-center">Register</h3>
+                        <hr/>
+
+                        <form method="POST" action="{% url 'register' %}">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <input type="text" class="form-control" name="username" placeholder="User Name" required/>
+                            </div>
+                            <div class="mb-3">
+                                <input type="password" class="form-control" name="password1" placeholder="Password" required/>
+                            </div>
+                            <div class="mb-3">
+                                <input type="password" class="form-control" name="password2" placeholder="Confirm Password" required/>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Register</button>
+                        </form>
+
+                        <br/>
+                        <p class="text-center">
+                            Already have an account? <a href="{% url 'login' %}">Log in here</a>
+                        </p>
+                    </div>
+                </div>
+
+                <br/>
+                <p class="text-center">
+                    <a href="{% url 'home' %}" class="text-secondary text-decoration-none">← Back to Home</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</body>
