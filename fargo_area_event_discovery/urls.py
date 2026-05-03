@@ -25,3 +25,4 @@ urlpatterns = [
     path('add-event/', views.add_event, name='addEvent'),
     path('update-event/<int:event_id>/', views.update_event, name='updateEvent'),
 ]
+ 
