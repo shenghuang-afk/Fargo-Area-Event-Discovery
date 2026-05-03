@@ -3,8 +3,11 @@ from urllib import request
 from django.shortcuts import get_object_or_404, render, redirect
 from .models import Event
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test
 from .models import Event
+from django.contrib.auth.forms import UserCreationForm
 
 def home(request):
     events = Event.objects.all()
@@ -66,6 +69,33 @@ def event_detail(request, pk):
     # event = get_object_or_404(Event, pk=pk)
     # return render(request, 'website/event_detail.html', {'event': event})
     return render(request, 'website/event_detail.html')
+
+
+def login_user(request):
+    if request.method == "POST":
+        username_var = request.POST["username"]
+        password_var = request.POST["password"]
+
+        user = authenticate(username=username_var, password=password_var)
+
+        if user is not None:
+            login(request, user)
+            messages.success(request, "Welcome back!")
+
+            if user.is_superuser:
+                return redirect("admin_dashboard")
+            else:
+                return redirect("home")
+        else:
+            messages.error(request, "Invalid username or password. Please try again.")
+            return redirect("login")
+
+    return render(request, "website/login.html", {})
+
+def logout_user(request):
+    logout(request)
+    messages.success(request, "You have been logged out.")
+    return redirect("home")
 
 # Create your views here.
 
