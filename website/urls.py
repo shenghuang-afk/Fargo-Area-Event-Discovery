@@ -7,5 +7,4 @@ urlpatterns = [
     path('event/<int:event_id>/status/<str:status>/', views.update_event_status, name='update_event_status'),
     path('login/', views.login_user, name='login'),
     path('logout/', views.logout_user, name='logout'),
-    path('register/', views.register_user, name='register'),
 ]

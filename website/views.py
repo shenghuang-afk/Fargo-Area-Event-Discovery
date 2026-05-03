@@ -69,23 +69,6 @@ def logout_user(request):
     messages.success(request, "You have been logged out.")
     return redirect("home")
 
-def register_user(request):
-    if request.method == "POST":
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            messages.success(request, "Account created.")
-            return redirect("home")
-        else:
-            messages.error(request, "Registration failed")
-    else:
-        form = UserCreationForm()
-
-    return render(request, "website/register.html", {"form": form})
-
-
-
 # Create your views here.
 
 #All this may change when we come together and decide on the final structure of the events page
