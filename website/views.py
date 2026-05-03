@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test
 from .models import Event
+from django.contrib.auth.forms import UserCreationForm
 
 def home(request):
     events = Event.objects.all()
@@ -39,6 +42,33 @@ def update_event_status(request, event_id, status):
     return redirect('admin_dashboard')
 #Admin dashboard view with superuser access control
 from website.models import Event
+
+
+def login_user(request):
+    if request.method == "POST":
+        username_var = request.POST["username"]
+        password_var = request.POST["password"]
+
+        user = authenticate(username=username_var, password=password_var)
+
+        if user is not None:
+            login(request, user)
+            messages.success(request, "Welcome back!")
+
+            if user.is_superuser:
+                return redirect("admin_dashboard")
+            else:
+                return redirect("home")
+        else:
+            messages.error(request, "Invalid username or password. Please try again.")
+            return redirect("login")
+
+    return render(request, "website/login.html", {})
+
+def logout_user(request):
+    logout(request)
+    messages.success(request, "You have been logged out.")
+    return redirect("home")
 
 # Create your views here.
 
