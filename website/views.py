@@ -116,11 +116,12 @@ def events(request):
     return render(request, 'events.html', event_dict)
 
 # View for all events that current user created
-def user_events(request, user_id):
+def user_events(request):
     if request.user.is_authenticated:
-        user_event_list = Event.objects.filter(event_owner=user_id)
+        user = request.user
+        user_event_list = Event.objects.filter(event_owner=user)
         user_event_dict = {'events': user_event_list}
-        return render(request, 'user_events.html', user_event_dict)
+        return render(request, 'website/userEvents.html', user_event_dict)
     else:
         return redirect('login')
     
@@ -134,18 +135,20 @@ def add_event(request):
             event_location = data.get('event_location')
             event_category = data.get('event_category')
             event_description = data.get('event_description')
+            event_time = data.get('event_time')
             
             # Create a new event instance
             new_event = Event(
                 event_name=event_name,
                 event_date=event_date,
+                event_time=event_time,
                 event_location=event_location,
                 event_category=event_category,
                 event_description=event_description,
                 event_owner=request.user
             )
             new_event.save()
-            return redirect('home')
+            return redirect('user_events')
         else:
             return render(request, 'website/addEvent.html')
     else:
@@ -154,9 +157,9 @@ def add_event(request):
 # View for deleting an event
 def delete_event(request, event_id):
     if request.user.is_authenticated:
-        event = get_object_or_404(Event, id=event_id, event_owner=request.user)
+        event = get_object_or_404(Event, event_id=pk, event_owner=request.user)
         event.delete()
-        return redirect('home')
+        return redirect('user_events')
     else:
         return redirect('login')
     
@@ -169,11 +172,13 @@ def update_event(request, event_id):
             data = request.POST
             event.event_name = data.get('event_name')
             event.event_date = data.get('event_date')
+            event.event_time = data.get('event_time')
             event.event_location = data.get('event_location')
             event.event_category = data.get('event_category')
             event.event_description = data.get('event_description')
             event.save()
-            return redirect('home')
+            messages.success(request, "Event updated successfully.")
+            return redirect('user_events')
         else:
             # Display form with existing event data
             context = {'event': event}
