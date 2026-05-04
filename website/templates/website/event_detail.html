@@ -6,19 +6,22 @@
     <title>Event Details</title>
   </head>
   <body>
-    <!-- 1. Add Leaflet CSS to the <head> -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
-    <!-- 2. Replace your placeholder <div> with this map container -->
     <div id="event-map" style="height: 500px; width: 100%; border-radius: 8px;" class="shadow-sm"></div>
 
-    <!-- 3. Add Leaflet JS before the </body> tag -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <script>
-      // 1. Initialize the map first (center it on Fargo generally)
-      var map = L.map('event-map').setView([46.8772, -96.7898], 11)
+      var map = L.map('event-map').setView([46.8772, -96.7898], 12)
       
+      {% for event in events %}
+      var lat = Number("{{  event.latitude }}");
+      var lon = Number("{{  event.longitude }}");
+      var name = "{{ event.event_name|escapejs }}";
+      L.marker([lat, lon]).addTo(map).bindPopup(name);
+      {% endfor %}
+
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
       }).addTo(map)

@@ -40,8 +40,8 @@ def admin_dashboard(request):
     })
 
 @user_passes_test(superuser_required, login_url='/admin/login/')
-def update_event_status(request, pk, status):
-    event = get_object_or_404(Event, id=pk)
+def update_event_status(request, event_id, status):
+    event = get_object_or_404(Event, id=event_id)
     event.status = status
     event.save()
     return redirect('admin_dashboard')
@@ -56,59 +56,28 @@ from django.utils import timezone
 
 def event_list(request):
 
-    events = [
-        {
-            'pk' : 1,
-            'event_name' : 'Bison Vs Jackrabbits',
-            'event_date' : '2024-06-01',
-            'event_location' : 'Fargo Dome',
-            'event_category' : 'Sports',
-            'latitude' : 46.902972,
-            'longitude' : -96.801286
-        },
-        {
-            'pk' : 2,
-            'event_name' : 'Fargo Force Vs Iowa Wild',
-            'event_date' : '2024-06-01',
-            'event_location' : 'Scheels Arena',
-            'event_category' : 'Sports',
-            'latitude' : 46.835560,
-            'longitude' : -96.876091
-        }
-    ]
-
-    # events = Event.objects.filter(is_approved=True).order_by('event_date')
+    all_events = Event.objects.all()
 
     category = request.GET.get('category')
     if category:
-        events = events.filter(event_category__icontains=category)
+        all_events = all_events.filter(event_category__icontains=category)
 
     date_query = request.GET.get('date')
     if date_query:
         try:
             date_query = datetime.strptime(date_query, '%Y-%m-%d').date()
-            events = events.filter(event_date__date=date_query)
+            all_events = all_events.filter(event_date__date=date_query)
         except ValueError:
             pass
 
-    return render(request, 'website/event_list.html', {'events': events})
+    return render(request, 'website/event_list.html', {'events': all_events})
 
 def event_detail(request, pk):
-    context = {
-        'events': [
-            {
-                'event_name': 'Bison Football Game',
-                'latitude': 46.8975,
-                'longitude': -96.8040,
-            },
-            {
-                'event_name': 'Fargo Force Vs Iowa Wild',
-                'latitude': 46.835560,
-                'longitude': -96.876091,
-            }
-        ]
-    }
-    return render(request, 'website/event_detail.html', context)
+    
+    event = get_object_or_404(Event, pk=pk)
+    all_events = Event.objects.all()
+    
+    return render(request, 'website/event_detail.html', {'event': event, 'events': all_events})
 
 
 def login_user(request):
@@ -176,7 +145,6 @@ def add_event(request):
                 event_owner=request.user
             )
             new_event.save()
-            # return redirect('user_events', user_id=request.user.id)
             return redirect('home')
         else:
             return render(request, 'website/addEvent.html')
@@ -184,19 +152,18 @@ def add_event(request):
         return redirect('login')
     
 # View for deleting an event
-def delete_event(request, pk):
+def delete_event(request, event_id):
     if request.user.is_authenticated:
-        event = get_object_or_404(Event, id=pk, event_owner=request.user)
+        event = get_object_or_404(Event, id=event_id, event_owner=request.user)
         event.delete()
-        # return redirect('user_events', user_id=request.user.id)
         return redirect('home')
     else:
         return redirect('login')
     
 #View for updating events
-def update_event(request, pk):
+def update_event(request, event_id):
     if request.user.is_authenticated:
-        event = get_object_or_404(Event, event_id=pk, event_owner=request.user)
+        event = get_object_or_404(Event, id=event_id, event_owner=request.user)
         if request.method == 'POST':
             # Handle form submission
             data = request.POST
@@ -206,7 +173,6 @@ def update_event(request, pk):
             event.event_category = data.get('event_category')
             event.event_description = data.get('event_description')
             event.save()
-            messages.success(request, "Event updated successfully.")
             return redirect('home')
         else:
             # Display form with existing event data
