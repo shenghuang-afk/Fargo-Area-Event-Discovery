@@ -31,12 +31,13 @@ class Event(models.Model):
 
     event_id = models.AutoField(primary_key=True)
     event_name = models.CharField(max_length=255)
-    event_date = models.DateTimeField()
+    event_date = models.DateField()
+    event_time = models.TimeField(null=True, blank=True)
     event_location = models.CharField(max_length=255)
     event_category = models.CharField(max_length=50, choices=categories)
     event_description = models.TextField(default="")
 
-    is_approved = models.BooleanField(default=False)
+    # is_approved = models.BooleanField(default=False)
 
     latitude = models.FloatField(blank=True, null=True)
     longitude = models.FloatField(blank=True, null=True)
