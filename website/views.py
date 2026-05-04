@@ -1,9 +1,14 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from sched import Event
+from urllib import request
+from django.shortcuts import get_object_or_404, render, redirect
+from .models import Event
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test
 from .models import Event
 from django.contrib.auth.forms import UserCreationForm
+from django.utils import timezone
+from datetime import datetime
 
 def home(request):
     events = Event.objects.all()
@@ -35,13 +40,44 @@ def admin_dashboard(request):
     })
 
 @user_passes_test(superuser_required, login_url='/admin/login/')
-def update_event_status(request, pk, status):
-    event = get_object_or_404(Event, id=pk)
+def update_event_status(request, event_id, status):
+    event = get_object_or_404(Event, id=event_id)
     event.status = status
     event.save()
     return redirect('admin_dashboard')
 #Admin dashboard view with superuser access control
 from website.models import Event
+from django.utils import timezone
+
+
+# Create your views here.
+# website/views.py
+from django.utils import timezone
+
+def event_list(request):
+
+    all_events = Event.objects.all()
+
+    category = request.GET.get('category')
+    if category:
+        all_events = all_events.filter(event_category__icontains=category)
+
+    date_query = request.GET.get('date')
+    if date_query:
+        try:
+            date_query = datetime.strptime(date_query, '%Y-%m-%d').date()
+            all_events = all_events.filter(event_date__date=date_query)
+        except ValueError:
+            pass
+
+    return render(request, 'website/event_list.html', {'events': all_events})
+
+def event_detail(request, pk):
+    
+    event = get_object_or_404(Event, pk=pk)
+    all_events = Event.objects.all()
+    
+    return render(request, 'website/event_detail.html', {'event': event, 'events': all_events})
 
 
 def login_user(request):
@@ -119,7 +155,7 @@ def add_event(request):
         return redirect('login')
     
 # View for deleting an event
-def delete_event(request, pk):
+def delete_event(request, event_id):
     if request.user.is_authenticated:
         event = get_object_or_404(Event, event_id=pk, event_owner=request.user)
         event.delete()
@@ -128,9 +164,9 @@ def delete_event(request, pk):
         return redirect('login')
     
 #View for updating events
-def update_event(request, pk):
+def update_event(request, event_id):
     if request.user.is_authenticated:
-        event = get_object_or_404(Event, event_id=pk, event_owner=request.user)
+        event = get_object_or_404(Event, id=event_id, event_owner=request.user)
         if request.method == 'POST':
             # Handle form submission
             data = request.POST

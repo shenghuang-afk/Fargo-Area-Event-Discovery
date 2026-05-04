@@ -27,3 +27,4 @@ urlpatterns = [
     path('register/', include("registration.urls")),
     path('delete-event/<int:pk>/', views.delete_event, name='deleteEvent')
 ]
+ 
