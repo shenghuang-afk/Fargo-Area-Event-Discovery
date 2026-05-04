@@ -23,18 +23,7 @@
         attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
-    // 2. The Loop: This creates a marker for EVERY event in your fake list
-    {% for event in events %}
-        // We define these inside the loop so they update for each event
-        var lat = Number("{{ event.latitude }}");
-        var lon = Number("{{ event.longitude }}");
-        var eventName = "{{ event.event_name|escapejs }}";
-
-        // Add the marker to the map
-        L.marker([lat, lon]).addTo(map)
-            .bindPopup(eventName);
-    {% endfor %}
-</script>
+ 
 
     <button onclick="window.history.back()" class="btn btn-outline-secondary mt-4">Back to Events</button>
     <button onclick="window.location.href='{% url 'home' %}'" class="btn btn-outline-secondary mt-4">Home</button>
