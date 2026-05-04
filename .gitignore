@@ -1,6 +1,14 @@
+<<<<<<< HEAD
+fargo_area_event_discovery\__pycache__
+website\__pycache__
+website\migrations\__pycache__
+__pycache__/
+*.pyc
+=======
 # Python cache
 __pycache__/
 *.pyc
 
 # SQLite database
 db.sqlite3
+>>>>>>> 43f8fd0a147fa2a7986ddc2954a464bb652941f3
