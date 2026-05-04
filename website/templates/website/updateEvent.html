@@ -18,6 +18,10 @@
         <input type="date" class="form-control" id="event_date" name="event_date" value="{{ event.event_date }}" required>
     </div>
     <div class="form-group">
+        <label for="event_time">Event Time</label>
+        <input type="time" class="form-control" id="event_time" name="event_time" value="{{ event.event_time }}" required>
+    </div>
+    <div class="form-group">
         <label for="event_location">Event Location</label>
         <input type="text" class="form-control" id="event_location" name="event_location" value="{{ event.event_location }}" required>
     </div>
