@@ -1,18 +1,13 @@
-<div class="card-body">
-  <!-- KAN-59: Title, Date, Category, and Location -->
-  <h5 class="card-title fw-bold text-dark">{{ event.event_name }}</h5>
-
-  <p class="card-text text-muted mb-1">
-    <i class="bi bi-calendar3"></i> {{ event.event_date|date:'M d, Y' }}
-    <span class="ms-2"><i class="bi bi-clock"></i> {{ event.event_date|date:'g:i A' }}</span>
-  </p>
-
-  <p class="card-text text-muted">
-    <i class="bi bi-geo-alt-fill text-danger"></i> {{ event.event_location }}
-  </p>
-</div>
-
-<div class="card-footer bg-white border-0 pb-3">
-  <!-- KAN-44: Link to Detail View -->
-  <a href="{% url 'event_detail' event.event_id %}" class="btn btn-outline-primary w-100 fw-bold">View Details</a>
+<div class="col">
+  <div class="card h-100 shadow-sm border-0">
+    <div class="card-body">
+      <span class="badge bg-info text-dark mb-2">{{ event.event_category }}</span>
+      <h5 class="card-title fw-bold">{{ event.event_name }}</h5>
+      <p class="card-text text-muted small">
+        <i class="bi bi-geo-alt me-1"></i> {{ event.event_location }}
+      </p>
+      <!-- Link to the Detail Page you just built -->
+      <a href="{% url 'event_detail' event.pk %}" class="btn btn-outline-primary btn-sm w-100">View Details</a>
+    </div>
+  </div>
 </div>

@@ -2,12 +2,13 @@ from sched import Event
 from urllib import request
 from django.shortcuts import get_object_or_404, render, redirect
 from .models import Event
-from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test
 from .models import Event
 from django.contrib.auth.forms import UserCreationForm
+from django.utils import timezone
+from datetime import datetime
 
 def home(request):
     events = Event.objects.all()
@@ -54,21 +55,60 @@ from django.utils import timezone
 from django.utils import timezone
 
 def event_list(request):
-    events = Event.objects.filter(is_approved=True).order_by('event_date')
+
+    events = [
+        {
+            'pk' : 1,
+            'event_name' : 'Bison Vs Jackrabbits',
+            'event_date' : '2024-06-01',
+            'event_location' : 'Fargo Dome',
+            'event_category' : 'Sports',
+            'latitude' : 46.902972,
+            'longitude' : -96.801286
+        },
+        {
+            'pk' : 2,
+            'event_name' : 'Fargo Force Vs Iowa Wild',
+            'event_date' : '2024-06-01',
+            'event_location' : 'Scheels Arena',
+            'event_category' : 'Sports',
+            'latitude' : 46.835560,
+            'longitude' : -96.876091
+        }
+    ]
+
+    # events = Event.objects.filter(is_approved=True).order_by('event_date')
 
     category = request.GET.get('category')
     if category:
         events = events.filter(event_category__icontains=category)
 
-    if request.GET.get('upcoming') == 'true':
-        events = events.filter(event_date__gte=timezone.now())
+    date_query = request.GET.get('date')
+    if date_query:
+        try:
+            date_query = datetime.strptime(date_query, '%Y-%m-%d').date()
+            events = events.filter(event_date__date=date_query)
+        except ValueError:
+            pass
 
     return render(request, 'website/event_list.html', {'events': events})
 
 def event_detail(request, pk):
-    # event = get_object_or_404(Event, pk=pk)
-    # return render(request, 'website/event_detail.html', {'event': event})
-    return render(request, 'website/event_detail.html')
+    context = {
+        'events': [
+            {
+                'event_name': 'Bison Football Game',
+                'latitude': 46.8975,
+                'longitude': -96.8040,
+            },
+            {
+                'event_name': 'Fargo Force Vs Iowa Wild',
+                'latitude': 46.835560,
+                'longitude': -96.876091,
+            }
+        ]
+    }
+    return render(request, 'website/event_detail.html', context)
 
 
 def login_user(request):

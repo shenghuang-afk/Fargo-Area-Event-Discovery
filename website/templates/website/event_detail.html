@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Event Details</title>
   </head>
   <body>
     <!-- 1. Add Leaflet CSS to the <head> -->
@@ -16,20 +16,27 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <script>
-      // Use quotes around the Django tag and then convert to a Number
-      // This prevents the "Unknown Token" error if the value is empty
-      var lat = Number('{{ event.latitude|default:46.8772 }}')
-      var lon = Number('{{ event.longitude|default:-96.7898 }}')
-      var eventName = "{{ event.event_name|default:'Test Event'|escapejs }}"
-      
-      // Initialize the map
-      var map = L.map('event-map').setView([lat, lon], 13)
-      
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    // 1. Initialize the map first (center it on Fargo generally)
+    var map = L.map('event-map').setView([46.8772, -96.7898], 11);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
-      }).addTo(map)
-      
-      L.marker([lat, lon]).addTo(map).bindPopup(eventName).openPopup()
-    </script>
+    }).addTo(map);
+
+    // 2. The Loop: This creates a marker for EVERY event in your fake list
+    {% for event in events %}
+        // We define these inside the loop so they update for each event
+        var lat = Number("{{ event.latitude }}");
+        var lon = Number("{{ event.longitude }}");
+        var eventName = "{{ event.event_name|escapejs }}";
+
+        // Add the marker to the map
+        L.marker([lat, lon]).addTo(map)
+            .bindPopup(eventName);
+    {% endfor %}
+</script>
+
+    <button onclick="window.history.back()" class="btn btn-outline-secondary mt-4">Back to Events</button>
+    <button onclick="window.location.href='{% url 'home' %}'" class="btn btn-outline-secondary mt-4">Home</button>
   </body>
 </html>
