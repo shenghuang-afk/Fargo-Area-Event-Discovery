@@ -16,14 +16,13 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <script>
-    // 1. Initialize the map first (center it on Fargo generally)
-    var map = L.map('event-map').setView([46.8772, -96.7898], 11);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      // 1. Initialize the map first (center it on Fargo generally)
+      var map = L.map('event-map').setView([46.8772, -96.7898], 11)
+      
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
-
- 
+      }).addTo(map)
+    </script>
 
     <button onclick="window.history.back()" class="btn btn-outline-secondary mt-4">Back to Events</button>
     <button onclick="window.location.href='{% url 'home' %}'" class="btn btn-outline-secondary mt-4">Home</button>
