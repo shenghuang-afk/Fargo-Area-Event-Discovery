@@ -10,6 +10,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.utils import timezone
 from datetime import datetime
 
+# Sheng Huang
 def home(request):
     events = Event.objects.all()
 
@@ -50,8 +51,7 @@ from website.models import Event
 from django.utils import timezone
 
 
-# Create your views here.
-# website/views.py
+# Evan Fretheim
 from django.utils import timezone
 
 def event_list(request):
@@ -79,7 +79,7 @@ def event_detail(request, pk):
     
     return render(request, 'website/event_detail.html', {'event': event, 'events': all_events})
 
-
+# Jaden Dischinger
 def login_user(request):
     if request.method == "POST":
         username_var = request.POST["username"]
@@ -100,7 +100,7 @@ def login_user(request):
             return render(request, "website/login.html", {})
 
     return render(request, "website/login.html", {})
-    
+
 def logout_user(request):
     logout(request)
     messages.success(request, "You have been logged out.")
@@ -108,8 +108,7 @@ def logout_user(request):
 
 # Create your views here.
 
-#All this may change when we come together and decide on the final structure of the events page
-# View for all events in the database
+# Julius Rosalin
 def events(request):
     event_list = Event.objects.all()
     event_dict = {'events' : event_list}
@@ -156,7 +155,7 @@ def add_event(request):
         return redirect('login')
     
 # View for deleting an event
-def delete_event(request, event_id):
+def delete_event(request, pk):
     if request.user.is_authenticated:
         event = get_object_or_404(Event, event_id=pk, event_owner=request.user)
         event.delete()
