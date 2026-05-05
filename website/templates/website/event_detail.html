@@ -16,8 +16,8 @@
       var map = L.map('event-map').setView([46.8772, -96.7898], 12)
       
       {% for event in events %}
-      var lat = Number("{{  event.latitude }}");
-      var lon = Number("{{  event.longitude }}");
+      var lat = parseFloat("{{  event.latitude|floatformat:"6" }}");
+      var lon = parseFloat("{{  event.longitude|floatformat:"6" }}");
       var name = "{{ event.event_name|escapejs }}";
       L.marker([lat, lon]).addTo(map).bindPopup(name);
       {% endfor %}
