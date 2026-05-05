@@ -4,6 +4,7 @@ from django.contrib import messages
 from .forms import SignUpForm
 
 # Create your views here.
+# Jaden Dischinger
 def register_user(request):
     if request.method == "POST":
         form = SignUpForm(request.POST)
