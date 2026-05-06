@@ -45,8 +45,8 @@ def admin_dashboard(request):
         'events': events
     })
 @user_passes_test(superuser_required, login_url='/admin/login/')
-def admin_delete_event(request, event_id):
-    event = get_object_or_404(Event, event_id=event_id)
+def admin_delete_event(request, pk):
+    event = get_object_or_404(Event, event_id=pk)
     event.delete()
     messages.success(request, "Event deleted.")
     return redirect('admin_dashboard')
@@ -122,6 +122,11 @@ def events(request):
     event_list = Event.objects.all()
     event_dict = {'events' : event_list}
     return render(request, 'events.html', event_dict)
+
+def approved_events(request):
+    approved_event_list = Event.objects.filter(status='accepted')
+    approved_event_dict = {'events': approved_event_list}
+    return render(request, 'website/event_list.html', approved_event_dict)
 
 # View for all events that current user created
 def user_events(request):

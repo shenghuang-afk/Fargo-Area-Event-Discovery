@@ -5,6 +5,7 @@
 
   {% if user.is_authenticated %}
     {% if events %}
+    <body class="bg-light">
       <div class="container">
         <!-- KAN-43: Filter & Search Section -->
         <div class="row mb-5 justify-content-center">
@@ -83,6 +84,6 @@
     {% endif %}
   {% else %}
     <p>Please log in to view your events.</p>
-
   {% endif %}
+</body>
 {% endblock %}
