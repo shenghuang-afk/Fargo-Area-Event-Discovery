@@ -56,28 +56,32 @@ from django.utils import timezone
 
 def event_list(request):
 
-    all_events = Event.objects.all()
+    events = Event.objects.all().order_by('event_date')
 
     category = request.GET.get('category')
     if category:
-        all_events = all_events.filter(event_category__icontains=category)
+        events = events.filter(event_category__iexact=category)
+
+    query = request.GET.get('search')
+    if query:
+        events = events.filter(event_name__icontains=query) | events.filter(event_description__icontains=query)
 
     date_query = request.GET.get('date')
     if date_query:
         try:
             date_query = datetime.strptime(date_query, '%Y-%m-%d').date()
-            all_events = all_events.filter(event_date__date=date_query)
+            events = events.filter(event_date__date=date_query)
         except ValueError:
             pass
 
-    return render(request, 'website/event_list.html', {'events': all_events})
+    return render(request, 'website/event_list.html', {'events': events, 'categories': category})
 
 def event_detail(request, pk):
     
     event = get_object_or_404(Event, pk=pk)
-    all_events = Event.objects.all()
+    events = Event.objects.all()
     
-    return render(request, 'website/event_detail.html', {'event': event, 'events': all_events})
+    return render(request, 'website/event_detail.html', {'event': event, 'events': events})
 
 # Jaden Dischinger
 def login_user(request):
