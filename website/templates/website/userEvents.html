@@ -5,6 +5,7 @@
 
   {% if user.is_authenticated %}
     {% if events %}
+    <body class="bg-light">
       <div class="container">
         <!-- KAN-43: Filter & Search Section -->
         <div class="row mb-5 justify-content-center">
@@ -63,6 +64,7 @@
               <div class="container-flex">
                 <a class="btn btn-secondary shadow-sm" href="{% url 'updateEvent' event.event_id %}" style="margin:15px;">Update</a>
                 <a class="btn btn-danger shadow-sm" href="{% url 'deleteEvent' event.event_id %}" style="margin:15px;">Delete</a>
+                <p class="btn btn-secondary disabled" style="margin:15px;">Status: {{ event.status }}</p>
               </div>
             </div>
           {% empty %}
@@ -84,4 +86,5 @@
   {% else %}
     <p>Please log in to view your events.</p>
   {% endif %}
+</body>
 {% endblock %}

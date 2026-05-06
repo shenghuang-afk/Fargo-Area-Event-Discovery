@@ -21,7 +21,12 @@ def home(request):
 #Admin dashboard view with superuser access control
 def superuser_required(user):
     return user.is_superuser
-
+@user_passes_test(superuser_required, login_url='/admin/login/')
+def update_event_status(request, event_id, status):
+    event = get_object_or_404(Event, event_id=event_id)
+    event.status = status
+    event.save()
+    return redirect('admin_dashboard')
 @user_passes_test(superuser_required, login_url='/admin/login/')
 def admin_dashboard(request):
     events = Event.objects.all()
@@ -41,10 +46,10 @@ def admin_dashboard(request):
     })
 
 @user_passes_test(superuser_required, login_url='/admin/login/')
-def update_event_status(request, event_id, status):
-    event = get_object_or_404(Event, id=event_id)
-    event.status = status
-    event.save()
+def admin_delete_event(request, pk):
+    event = get_object_or_404(Event, event_id=pk)
+    event.delete()
+    messages.success(request, "Event deleted.")
     return redirect('admin_dashboard')
 #Admin dashboard view with superuser access control - Sheng Huang
 
@@ -118,6 +123,11 @@ def events(request):
     event_list = Event.objects.all()
     event_dict = {'events' : event_list}
     return render(request, 'events.html', event_dict)
+
+def approved_events(request):
+    approved_event_list = Event.objects.filter(status='accepted')
+    approved_event_dict = {'events': approved_event_list}
+    return render(request, 'website/event_list.html', approved_event_dict)
 
 # View for all events that current user created
 def user_events(request):
