@@ -83,5 +83,36 @@
     {% endif %}
   {% else %}
     <p>Please log in to view your events.</p>
+<<<<<<< HEAD
+{% endif %}
+
+{% endblock %}
+
+<div class="container">
+  <h2 class="mb-4">Admin Dashboard</h2>
+
+  {% for event in events %}
+    <div class="card mb-3 p-3">
+      
+      {% include 'website/event_card.html' with event=event %}
+
+      <div class="d-flex gap-2 mt-2">
+        <a class="btn btn-secondary"
+           href="{% url 'updateEvent' event.event_id %}">
+           Update
+        </a>
+
+        <a class="btn btn-danger"
+           href="{% url 'admin_delete_event' event.event_id %}"
+           onclick="return confirm('Delete this event?');">
+           Delete
+        </a>
+      </div>
+
+    </div>
+  {% endfor %}
+</div>
+=======
   {% endif %}
 {% endblock %}
+>>>>>>> 28a28849d34b9889c1315145555489013f02321d

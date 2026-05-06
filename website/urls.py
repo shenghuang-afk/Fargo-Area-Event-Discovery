@@ -11,4 +11,5 @@ urlpatterns = [
     path('login/', views.login_user, name='login'),
     path('logout/', views.logout_user, name='logout'),
     path('user-events/', views.user_events, name='user_events'),
+    path('admin-dashboard/delete/<int:event_id>/', views.admin_delete_event, name='admin_delete_event'),
 ]
