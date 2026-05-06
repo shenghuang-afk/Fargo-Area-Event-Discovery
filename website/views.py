@@ -46,8 +46,8 @@ def admin_dashboard(request):
     })
 
 @user_passes_test(superuser_required, login_url='/admin/login/')
-def admin_delete_event(request, event_id):
-    event = get_object_or_404(Event, event_id=event_id)
+def admin_delete_event(request, pk):
+    event = get_object_or_404(Event, event_id=pk)
     event.delete()
     messages.success(request, "Event deleted.")
     return redirect('admin_dashboard')
