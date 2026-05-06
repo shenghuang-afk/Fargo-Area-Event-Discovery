@@ -44,7 +44,6 @@ def admin_dashboard(request):
     return render(request, 'website/admin_dashboard.html', {
         'events': events
     })
-
 @user_passes_test(superuser_required, login_url='/admin/login/')
 def admin_delete_event(request, event_id):
     event = get_object_or_404(Event, event_id=event_id)
