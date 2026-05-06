@@ -1,5 +1,3 @@
-from sched import Event
-from urllib import request
 from django.shortcuts import get_object_or_404, render, redirect
 from .models import Event
 from django.contrib.auth import authenticate, login, logout
@@ -21,12 +19,17 @@ def home(request):
 #Admin dashboard view with superuser access control
 def superuser_required(user):
     return user.is_superuser
+
 @user_passes_test(superuser_required, login_url='/admin/login/')
-def update_event_status(request, event_id, status):
-    event = get_object_or_404(Event, event_id=event_id)
-    event.status = status
-    event.save()
+def update_event_status(request, pk):
+    event = get_object_or_404(Event, event_id=pk)
+
+    if request.method == "POST":
+        event.status = request.POST.get("status")
+        
+        event.save()
     return redirect('admin_dashboard')
+
 @user_passes_test(superuser_required, login_url='/admin/login/')
 def admin_dashboard(request):
     events = Event.objects.all()
