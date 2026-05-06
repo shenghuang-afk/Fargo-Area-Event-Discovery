@@ -18,7 +18,32 @@
                    onclick="return confirm('Are you sure you want to delete this event?');">
                   Delete
                 </a>
+                <form method="POST" action="{% url 'update_event_status' event.event_id %}">
+                  {% csrf_token %}
                 
+                  <fieldset>
+                    <label>
+                      <input type="radio" name="status" value="accepted"
+                        {% if event.status == 'accepted' %}checked{% endif %}>
+                      Approve
+                    </label>
+                
+                    <label>
+                      <input type="radio" name="status" value="rejected"
+                        {% if event.status == 'rejected' %}checked{% endif %}>
+                      Reject
+                    </label>
+                
+                    <label>
+                      <input type="radio" name="status" value= "review"
+                        {% if event.status == 'review' %}checked{% endif %}>
+                      In review
+                    </label>
+                
+                  </fieldset>
+                
+                  <button type="submit" class="btn btn-primary mt-2">Update</button>
+                </form>
               </div>
             </div>
           </div>
