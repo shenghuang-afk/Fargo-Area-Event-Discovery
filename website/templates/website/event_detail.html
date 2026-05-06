@@ -14,12 +14,12 @@
     <script>
       var map = L.map('event-map').setView([46.8772, -96.7898], 12)
       
-      {% for event in events %}
-      var lat = Number("{{  event.latitude }}");
-      var lon = Number("{{  event.longitude }}");
-      var name = "{{ event.event_name|escapejs }}";
-      L.marker([lat, lon]).addTo(map).bindPopup(name);
-      {% endfor %}
+      for event in events
+        var lat = Number("{{  event.latitude }}");
+        var lon = Number("{{  event.longitude }}");
+        var name = "{{ event.event_name|escapejs }}";
+        L.marker([lat, lon]).addTo(map).bindPopup(name);
+      endfor
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
