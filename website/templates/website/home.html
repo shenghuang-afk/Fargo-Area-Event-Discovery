@@ -7,17 +7,16 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <!-- Simple Navigation Header -->
-    <nav class="navbar navbar-dark bg-dark mb-4 shadow" dir="rtl">
+    <nav class="navbar navbar-dark bg-dark mb-4 shadow">
         <div class="container">
-      
-          <a class="navbar-brand fw-bold" href="{% url 'event_list' %}">
-            FARGO EVENT DISCOVERY
-          </a>
-      
-          <div class="d-flex gap-3 align-items-center">
-      
+            <a class="navbar-brand fw-bold" href="{% url 'event_list' %}" dir="ltr">
+                FARGO EVENT DISCOVERY
+            </a>
+          
+            <div class="d-flex gap-3 align-items-center">
+            
             <a href="{% url 'event_list' %}" class="nav-link text-white">Home</a>
-      
+            
             {% if user.is_authenticated %}
               <a href="{% url 'addEvent' %}" class="nav-link text-white">Add Event</a>
               <a href="{% url 'user_events' %}" class="nav-link text-white">My Events</a>
