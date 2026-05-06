@@ -2,7 +2,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-
     # path('events/', views.event_list, name='event_list'),
     path('events/<int:pk>/', views.event_detail, name='event_detail'),
     path('', views.home, name='home'),
@@ -12,7 +11,5 @@ urlpatterns = [
     path('logout/', views.logout_user, name='logout'),
     path('user-events/', views.user_events, name='user_events'),
     path('events/', views.approved_events, name='event_list')
-=======
-    path('admin-dashboard/delete/<int:event_id>/', views.admin_delete_event, name='admin_delete_event'),
->>>>>>> 1ebf27ac182a8dc0a34adc5f183a670b1254de71
+    path('admin-dashboard/delete/<int:event_id>/', views.admin_delete_event, name='admin_delete_event')
 ]
