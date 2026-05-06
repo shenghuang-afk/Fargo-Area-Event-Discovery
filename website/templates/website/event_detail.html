@@ -1,32 +1,30 @@
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Event Details</title>
+</head>
+<body>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Event Details</title>
-  </head>
-  <body>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <div id="event-map" style="height: 500px; width: 100%; border-radius: 8px;" class="shadow-sm"></div>
 
-    <div id="event-map" style="height: 500px; width: 100%; border-radius: 8px;" class="shadow-sm"></div>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-    <script>
+  <script>
       var map = L.map('event-map').setView([46.8772, -96.7898], 12)
       
-      for event in events
-        var lat = Number("{{  event.latitude }}");
-        var lon = Number("{{  event.longitude }}");
-        var name = "{{ event.event_name|escapejs }}";
-        L.marker([lat, lon]).addTo(map).bindPopup(name);
-      endfor
+      {% for event in events %}
+      var lat = parseFloat("{{  event.latitude|floatformat:"6" }}");
+      var lon = parseFloat("{{  event.longitude|floatformat:"6" }}");
+      var name = "{{ event.event_name|escapejs }}";
+      L.marker([lat, lon]).addTo(map).bindPopup(name);
+      {% endfor %}
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
       }).addTo(map)
     </script>
 
-    <button onclick="window.history.back()" class="btn btn-outline-secondary mt-4">Back to Events</button>
-    <a href="{% url 'event_list' %}" class="btn btn-outline-secondary mt-4">Home</a>
-  </body>
-
+  <button onclick="window.history.back()" class="btn btn-outline-secondary mt-4">Back to Events</button>
+  <a href="{% url 'event_list' %}" class="btn btn-outline-secondary mt-4">Home</a>
+</body>
