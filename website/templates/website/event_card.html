@@ -6,6 +6,9 @@
       <span class="badge bg-info text-dark mb-2">{{ event.event_category }}</span>
       <h5 class="card-title fw-bold">{{ event.event_name }}</h5>
       <p class="card-text"><small class="text-muted">{{ event.event_date }} at {{ event.event_time }}</small></p>
+      <p class="card-text">
+        {{ event.event_description|truncatechars:80 }}
+      </p>
       <p class="card-text text-muted small">
         <i class="bi bi-geo-alt me-1"></i> {{ event.event_location }}
       </p>
