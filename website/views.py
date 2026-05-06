@@ -10,6 +10,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.utils import timezone
 from datetime import datetime
 
+# Sheng Huang
 def home(request):
     events = Event.objects.all()
 
@@ -50,8 +51,7 @@ from website.models import Event
 from django.utils import timezone
 
 
-# Create your views here.
-# website/views.py
+# Evan Fretheim
 from django.utils import timezone
 
 def event_list(request):
@@ -79,7 +79,7 @@ def event_detail(request, pk):
     
     return render(request, 'website/event_detail.html', {'event': event, 'events': all_events})
 
-
+# Jaden Dischinger
 def login_user(request):
     if request.method == "POST":
         username_var = request.POST["username"]
@@ -97,7 +97,7 @@ def login_user(request):
                 return redirect("home")
         else:
             messages.error(request, "Invalid username or password. Please try again.")
-            return redirect("login")
+            return render(request, "website/login.html", {})
 
     return render(request, "website/login.html", {})
 
@@ -108,8 +108,7 @@ def logout_user(request):
 
 # Create your views here.
 
-#All this may change when we come together and decide on the final structure of the events page
-# View for all events in the database
+# Julius Rosalin
 def events(request):
     event_list = Event.objects.all()
     event_dict = {'events' : event_list}
@@ -152,21 +151,23 @@ def add_event(request):
         else:
             return render(request, 'website/addEvent.html')
     else:
+        messages.error(request, "You need to be logged in to add an event.")
         return redirect('login')
     
 # View for deleting an event
-def delete_event(request, event_id):
+def delete_event(request, pk):
     if request.user.is_authenticated:
         event = get_object_or_404(Event, event_id=pk, event_owner=request.user)
         event.delete()
         return redirect('user_events')
     else:
+        messages.error(request, "You need to be logged in to delete an event.")
         return redirect('login')
     
 #View for updating events
-def update_event(request, event_id):
+def update_event(request, pk):
     if request.user.is_authenticated:
-        event = get_object_or_404(Event, id=event_id, event_owner=request.user)
+        event = get_object_or_404(Event, event_id=pk, event_owner=request.user)
         if request.method == 'POST':
             # Handle form submission
             data = request.POST
@@ -184,4 +185,5 @@ def update_event(request, event_id):
             context = {'event': event}
             return render(request, 'website/updateEvent.html', context)
     else:
+        messages.error(request, "You need to be logged in to update an event.")
         return redirect('login')
