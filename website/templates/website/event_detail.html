@@ -34,13 +34,14 @@
             <!-- <a href="{% url 'event_list' %}" class="btn btn-outline-primary px-4">Back to Events</a>
             <a href="{% url 'event_list' %}" class="btn btn-outline-secondary ms-2">Home</a> -->
             <button class="btn btn-primary px-4" onclick="window.history.back();">Back</button>
+            <a href="{% url 'user_events' %}" class="btn btn-outline-secondary ms-2">My events</a>
           </div>
         </div>
 
         <!-- RIGHT SIDE: 50% Map -->
         <div class="col-md-6">
           <!-- ONLY one map div here -->
-          <div id="event-map" style="height: 100%; width: 100%; border-radius: 20px; border: 1px solid #dee2e6;" class="shadow-sm"></div>
+          <div id="event-map" style="height: 110%; width: 110%; border-radius: 20px; border: 1px solid #dee2e6;" class="shadow-sm"></div>
         </div>
       </div>
     </div>
