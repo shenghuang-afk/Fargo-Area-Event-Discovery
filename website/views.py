@@ -1,5 +1,3 @@
-from sched import Event
-from urllib import request
 from django.shortcuts import get_object_or_404, render, redirect
 from .models import Event
 from django.contrib.auth import authenticate, login, logout
