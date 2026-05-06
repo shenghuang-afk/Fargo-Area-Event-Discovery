@@ -119,6 +119,11 @@ def events(request):
     event_dict = {'events' : event_list}
     return render(request, 'events.html', event_dict)
 
+def approved_events(request):
+    approved_event_list = Event.objects.filter(status='accepted')
+    approved_event_dict = {'events': approved_event_list}
+    return render(request, 'website/event_list.html', approved_event_dict)
+
 # View for all events that current user created
 def user_events(request):
     if request.user.is_authenticated:
