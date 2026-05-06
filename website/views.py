@@ -46,7 +46,7 @@ def update_event_status(request, event_id, status):
     event.status = status
     event.save()
     return redirect('admin_dashboard')
-#Admin dashboard view with superuser access control
+#Admin dashboard view with superuser access control - Sheng Huang
 
 from website.models import Event
 from django.utils import timezone
