@@ -21,7 +21,12 @@ def home(request):
 #Admin dashboard view with superuser access control
 def superuser_required(user):
     return user.is_superuser
-
+@user_passes_test(superuser_required, login_url='/admin/login/')
+def update_event_status(request, event_id, status):
+    event = get_object_or_404(Event, event_id=event_id)
+    event.status = status
+    event.save()
+    return redirect('admin_dashboard')
 @user_passes_test(superuser_required, login_url='/admin/login/')
 def admin_dashboard(request):
     events = Event.objects.all()
@@ -41,10 +46,10 @@ def admin_dashboard(request):
     })
 
 @user_passes_test(superuser_required, login_url='/admin/login/')
-def update_event_status(request, event_id, status):
-    event = get_object_or_404(Event, id=event_id)
-    event.status = status
-    event.save()
+def admin_delete_event(request, event_id):
+    event = get_object_or_404(Event, event_id=event_id)
+    event.delete()
+    messages.success(request, "Event deleted.")
     return redirect('admin_dashboard')
 #Admin dashboard view with superuser access control - Sheng Huang
 

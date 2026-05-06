@@ -18,6 +18,9 @@
             <a href="{% url 'event_list' %}" class="nav-link text-white">Home</a>
             
             {% if user.is_authenticated %}
+                {% if user.is_superuser %}
+                  <a href="{% url 'admin_dashboard' %}" class="nav-link text-white">Admin Dashboard</a>
+                {% endif %}
               <a href="{% url 'addEvent' %}" class="nav-link text-white">Add Event</a>
               <a href="{% url 'user_events' %}" class="nav-link text-white">My Events</a>
               <a href="{% url 'logout' %}" class="nav-link text-white">Logout</a> 
