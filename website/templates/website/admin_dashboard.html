@@ -2,9 +2,10 @@
 {% load static %}
 {% block content %}
 
+<link rel="stylesheet" href="{% static 'website/styles.css' %}">
 <div class="container mt-4">
-    <h2 class="mb-4">Admin Dashboard</h2>
-  
+    <h2 class="mb-4" style="color: white;">Admin Dashboard</h2>
+
     {% if events %}
       <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         {% for event in events %}
@@ -69,9 +70,9 @@
       z-index:9999;
       ">
   <div style="background:white; padding:25px; border-radius:10px; text-align:center;">
-    <img src="{% static 'website/images/image1.jpg' %}" width="220"/>
-    
-    <a id="confirmDeleteBtn" class="btn btn-danger">Yes</a>
+    <img src="{% static 'website/images/image1.jpg' %}" width="420"/>
+    <h1></h1>
+    <a id="confirmDeleteBtn" class="btn btn-danger">Yes, am sure</a>
     <button type="button" class="btn btn-secondary" onclick="hideConfirmModal()">Cancel</button>
   </div>
 </div>

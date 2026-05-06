@@ -1,0 +1,8 @@
+/* Pretend this doesnt exist */
+body {
+    background-image: url('/static/website/images/FargoND.jpg');
+    background-size: cover;       /* fills screen */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed; /* optional: parallax feel */
+}
