@@ -19,12 +19,17 @@ def home(request):
 #Admin dashboard view with superuser access control
 def superuser_required(user):
     return user.is_superuser
+
 @user_passes_test(superuser_required, login_url='/admin/login/')
-def update_event_status(request, pk, status):
+def update_event_status(request, pk):
     event = get_object_or_404(Event, event_id=pk)
-    event.status = status
-    event.save()
+
+    if request.method == "POST":
+        event.status = request.POST.get("status")
+        
+        event.save()
     return redirect('admin_dashboard')
+
 @user_passes_test(superuser_required, login_url='/admin/login/')
 def admin_dashboard(request):
     events = Event.objects.all()
