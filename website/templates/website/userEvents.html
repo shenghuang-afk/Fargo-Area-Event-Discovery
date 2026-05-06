@@ -78,10 +78,13 @@
       <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         {% for event in events %}
           <!-- Reusing the Event List Component -->
+           <div class="card">
           {% include 'website/event_card.html' with event=event %}
-
-          <a class="btn btn-secondary" href="{% url 'updateEvent' event.event_id %}">Update</a>
-          <a class="btn btn-danger" href="{% url 'deleteEvent' event.event_id %}">Delete</a>
+          <div class="container-flex">
+            <a class="btn btn-secondary shadow-sm" href="{% url 'updateEvent' event.event_id %}" style="margin:15px;">Update</a>
+            <a class="btn btn-danger shadow-sm" href="{% url 'deleteEvent' event.event_id %}" style="margin:15px;">Delete</a>
+            </div>
+            </div>
         {% empty %}
           <!-- Empty State if no events match filters -->
           <div class="col-12 text-center py-5">
