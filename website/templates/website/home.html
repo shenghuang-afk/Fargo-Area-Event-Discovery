@@ -30,20 +30,6 @@
         </div>
       </nav>
 
-      <div class="d-flex gap-3 align-items-center">
-        <a href="{% url 'event_list' %}" class="nav-link text-white">Home</a>
-
-        {% if user.is_authenticated %}
-          <a href="{% url 'addEvent' %}" class="nav-link text-white">Add Event</a>
-          <a href="{% url 'user_events' %}" class="nav-link text-white">My Events</a>
-          <a href="{% url 'logout' %}" class="nav-link text-white">Logout</a>
-        {% else %}
-          <a href="{% url 'login' %}" class="nav-link text-white">Login</a>
-        {% endif %}
-      </div>
-    </div>
-  </nav>
-
   <div class="container">
     {% block content %}
 
