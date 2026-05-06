@@ -7,6 +7,7 @@ from .models import Event
 from django.contrib.auth.forms import UserCreationForm
 from django.utils import timezone
 from datetime import datetime
+from django.db.models import Q
 
 # Sheng Huang
 def home(request):
@@ -67,13 +68,16 @@ def event_list(request):
 
     events = Event.objects.all().order_by('event_date')
 
-    category = request.GET.get('category')
+    category = request.GET.get('event_category')
     if category:
-        events = events.filter(event_category__iexact=category)
+        events = events.filter(event_category=category)
 
     query = request.GET.get('search')
     if query:
-        events = events.filter(event_name__icontains=query) | events.filter(event_description__icontains=query)
+        events = events.filter(
+            Q(event_name__icontains=query) |
+            Q(event_description__icontains=query)
+        )
 
     date_query = request.GET.get('date')
     if date_query:
@@ -83,7 +87,13 @@ def event_list(request):
         except ValueError:
             pass
 
-    return render(request, 'website/event_list.html', {'events': events, 'categories': category})
+    return render(request, 'website/event_list.html', {
+        'events': events,
+        'categories': category
+    })
+    print("GET:", request.GET)
+    print("CATEGORY:", category)
+    print("FILTER COUNT:", events.count())
 
 def event_detail(request, pk):
     
@@ -130,7 +140,26 @@ def events(request):
 def approved_events(request):
     approved_event_list = Event.objects.filter(status='accepted')
     approved_event_dict = {'events': approved_event_list}
-    return render(request, 'website/event_list.html', approved_event_dict)
+    category = request.GET.get('event_category')
+    if category:
+        approved_event_list = approved_event_list.filter(event_category=category)
+
+    query = request.GET.get('search')
+    if query:
+        approved_event_list = approved_event_list.filter(
+            Q(event_name__icontains=query) |
+            Q(event_description__icontains=query)
+        )
+
+    date_query = request.GET.get('date')
+    if date_query:
+        approved_event_list = approved_event_list.filter(event_date=date_query)
+
+    return render(request, 'website/event_list.html', {
+        'events': approved_event_list,
+        'categories': category
+    })
+    # return render(request, 'website/event_list.html', approved_event_dict)
 
 # View for all events that current user created
 def user_events(request):
@@ -138,7 +167,26 @@ def user_events(request):
         user = request.user
         user_event_list = Event.objects.filter(event_owner=user)
         user_event_dict = {'events': user_event_list}
-        return render(request, 'website/userEvents.html', user_event_dict)
+        category = request.GET.get('event_category')
+        if category:
+            user_event_list = user_event_list.filter(event_category=category)
+
+        query = request.GET.get('search')
+        if query:
+            user_event_list = user_event_list.filter(
+                Q(event_name__icontains=query) |
+                Q(event_description__icontains=query)
+            )
+
+        date_query = request.GET.get('date')
+        if date_query:
+            user_event_list = user_event_list.filter(event_date=date_query)
+
+        return render(request, 'website/userEvents.html', {
+            'events': user_event_list,
+            'categories': category
+        })
+            # return render(request, 'website/userEvents.html', user_event_dict)
     else:
         return redirect('login')
     
