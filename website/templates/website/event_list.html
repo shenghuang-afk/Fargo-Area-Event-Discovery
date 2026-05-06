@@ -1,6 +1,6 @@
 <!-- website/templates/website/event_list.html -->
 
-{% extends "website/home.html" %}
+{% extends 'website/home.html' %}
 {% block content %}
   <head>
     <meta charset="UTF-8" />
@@ -12,8 +12,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" />
   </head>
   <body class="bg-light">
-
-
     <div class="container">
       <!-- KAN-43: Filter & Search Section -->
       <div class="row mb-5 justify-content-center">
@@ -24,8 +22,33 @@
               <form method="GET" action="{% url 'event_list' %}" class="row g-3">
                 <!-- Category Filter -->
                 <div class="col-md-5">
-                  <label class="form-label small text-muted">Category</label>
-                  <input type="text" name="category" class="form-control" placeholder="e.g. Music, Tech..." value="{{ request.GET.category }}" />
+                  <label>Category</label>
+                  <select name="category" class="form-select">
+                    <option value="">All Categories</option>
+                    {% if request.GET.category == 'music' %}
+                      <option value="music" selected>Music</option>
+                      <option value="sports" selected>Sports</option>
+                      <option value="arts" selected>Arts</option>
+                      <option value="education" selected>Education</option>
+                      <option value="technology" selected>technology</option>
+                      <option value="entertainment" selected>entertainment</option>
+                      <option value="food" selected>Food</option>
+                      <option value="business" selected>Business</option>
+                      <option value="charity" selected>Charity</option>
+                      <option value="social" selected>Social</option>
+                    {% else %}
+                      <option value="music">Music</option>
+                      <option value="sports">Sports</option>
+                      <option value="arts">Arts</option>
+                      <option value="education">Education</option>
+                      <option value="technology">Technology</option>
+                      <option value="entertainment">Entertainment</option>
+                      <option value="food">Food</option>
+                      <option value="business">Business</option>
+                      <option value="charity">Charity</option>
+                      <option value="social">Social</option>
+                    {% endif %}
+                  </select>
                 </div>
 
                 <!-- Date Filter -->
@@ -48,7 +71,7 @@
       <!-- Section Heading -->
       <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="h4 fw-bold text-dark mb-0">Upcoming Events</h2>
-        <span class="badge bg-secondary">{{ events|length }} found</span>
+        <span class="badge bg-secondary">{{ events.count }} found</span>
       </div>
 
       <!-- KAN-59: Event Grid -->
