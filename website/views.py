@@ -7,6 +7,7 @@ from .models import Event
 from django.contrib.auth.forms import UserCreationForm
 from django.utils import timezone
 from datetime import datetime
+from website.models import Event
 from django.db.models import Q
 
 # Sheng Huang
@@ -57,13 +58,7 @@ def admin_delete_event(request, pk):
     return redirect('admin_dashboard')
 #Admin dashboard view with superuser access control - Sheng Huang
 
-from website.models import Event
-from django.utils import timezone
-
-
 # Evan Fretheim
-from django.utils import timezone
-
 def event_list(request):
 
     events = Event.objects.all().order_by('event_date')
