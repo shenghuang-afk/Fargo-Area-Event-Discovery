@@ -34,14 +34,13 @@
           <p style="font-size: 1.1rem;">{{ event.event_description }}</p>
 
           <div class="mt-5">
-            <!-- <a href="{% url 'event_list' %}" class="btn btn-outline-primary px-4">Back to Events</a>
-            <a href="{% url 'event_list' %}" class="btn btn-outline-secondary ms-2">Home</a> -->
+            <!--  <a href="{% url 'event_list' %}" class="btn btn-outline-primary px-4">Back to Events</a>
+            <a href="{% url 'event_list' %}" class="btn btn-outline-secondary ms-2">Home</a>  -->
             <button class="btn btn-primary px-4" onclick="window.history.back();">Back</button>
             <a href="{% url 'user_events' %}" class="btn btn-info ms-2" style="color: white;">My events</a>
           </div>
         </div>
 
-        <!-- RIGHT SIDE: 50% Map -->
         <div class="col-md-6">
           <!-- ONLY one map div here -->
           <div id="event-map" style="height: 110%; width: 110%; border-radius: 20px; border: 1px solid #dee2e6;" class="shadow-sm"></div>
@@ -49,25 +48,25 @@
       </div>
     </div>
 
-    <!-- Essential JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <script>
     var eventLat = parseFloat("{{ event.latitude }}");
     var eventLon = parseFloat("{{ event.longitude }}");
 
-    // Initialize map centered on the current event
-    var map = L.map('event-map').setView([eventLat, eventLon], 13);
+    
+    var map = L.map('event-map').setView([eventLat, eventLon], 15);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
-    // 1. Add the main marker for the current event
+    // main marker
     L.marker([eventLat, eventLon]).addTo(map)
       .bindPopup("<b>{{ event.event_name|escapejs }}</b><br>Right here!")
       .openPopup();
 
+      // rest of markers 
     {% for event in events %}
       var lat = parseFloat("{{  event.latitude|floatformat:"6" }}");
       var lon = parseFloat("{{  event.longitude|floatformat:"6" }}");
@@ -81,21 +80,6 @@
       });
 
       {% endfor %}
-      /*
-  <script>
-      var map = L.map('event-map').setView([46.8772, -96.7898], 12)
-      
-
-      var lat = parseFloat("{{  event.latitude|floatformat:"6" }}");
-      var lon = parseFloat("{{  event.longitude|floatformat:"6" }}");
-      var name = "{{ event.event_name|escapejs }}";
-      L.marker([lat, lon]).addTo(map).bindPopup(name);
-
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
-      }).addTo(map)
-      */
-
   </script>
   </body>
 {% endblock %}
