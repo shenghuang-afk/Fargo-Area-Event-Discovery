@@ -10,8 +10,8 @@
       <p class="card-text text-muted small">
         <i class="bi bi-geo-alt me-1"></i> {{ event.event_location }}
       </p>
-
-      <a href="{% url 'event_detail' event.pk %}" class="btn btn-outline-primary btn-sm w-100">View Details</a>
+      <!-- Link to the Detail Page you just built -->
+      <a href="{% url 'event_detail' event.pk %}" class="btn btn-outline-primary btn-sm w-100">View Location</a>
     </div>
   </div>
 </div>
