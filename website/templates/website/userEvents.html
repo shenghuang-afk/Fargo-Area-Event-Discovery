@@ -1,8 +1,11 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
 {% extends 'website/home.html' %}
+{% load static %}
 {% block content %}
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
 
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
+  <link rel="stylesheet" href="{% static 'website/styles.css' %}">
   {% if user.is_authenticated %}
     <body class="bg-light">
       <div class="container">
@@ -59,8 +62,8 @@
 
         <!-- Section Heading -->
         <div class="d-flex justify-content-between align-items-center mb-4">
-          <h2 class="h4 fw-bold text-dark mb-0">Your {{ request.GET.event_category|default:"" |title }} Events</h2>
-          <span class="badge bg-secondary">{{ events|length }} found</span>
+          <h2 class="h4" style=" background: rgba(0, 0, 0, 0.465); padding: 10px 20px; border-radius: 10px; display: inline-block; color: white; font-family: Heebo;"> Your {{ request.GET.event_category|default:"" |title }} Events</h2>
+          <span style=" background: rgba(0, 0, 0, 0.465); padding: 10px 20px; border-radius: 10px; display: inline-block; color: white; font-family: Heebo;"> {{ events|length }} found</span>
         </div>
         <!-- KAN-59: Event Grid -->
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
