@@ -1,8 +1,23 @@
-/* Pretend this doesnt exist */
+
 body {
     background-image: url('/static/website/images/FargoND.jpg');
-    background-size: cover;       /* fills screen */
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    background-attachment: fixed; /* optional: parallax feel */
+    background-attachment: fixed; 
+}
+
+.details-overlay {
+    background: rgba(0, 0, 0, 0.6); 
+    color: white;
+
+    border-radius: 20px;
+    padding: 30px;
+    
+    max-width: 90%;
+    
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px); 
+    
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
 }
