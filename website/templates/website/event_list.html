@@ -1,7 +1,10 @@
 <!-- website/templates/website/event_list.html -->
 
 {% extends 'website/home.html' %}
+{% load static %}
 {% block content %}
+
+<link rel="stylesheet" href="{% static 'website/styles.css' %}">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -66,8 +69,9 @@
 
       <!-- Section Heading -->
       <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="h4 fw-bold text-dark mb-0">Upcoming {{ request.GET.event_category|default:"" |title }} Events</h2>
-        <span class="badge bg-secondary">{{ events.count }} found</span>
+        <h2 class="h4" style=" background: rgba(0, 0, 0, 0.465); padding: 10px 20px; border-radius: 10px; display: inline-block; color: white; font-family: Heebo;
+        "> Upcoming {{ request.GET.event_category|default:"" |title }} Events</h2>
+        <span style=" background: rgba(0, 0, 0, 0.465); padding: 10px 20px; border-radius: 10px; display: inline-block; color: white; font-family: Heebo;"> {{ events.count }} found</span>
       </div>
 
       <!-- KAN-59: Event Grid -->

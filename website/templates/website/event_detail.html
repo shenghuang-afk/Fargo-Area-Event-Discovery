@@ -1,5 +1,8 @@
 {% extends 'website/home.html' %}
+{% load static %}
 {% block content %}
+
+<link rel="stylesheet" href="{% static 'website/styles.css' %}">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,30 +14,30 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
   </head>
   <body>
-    <div class="container-fluid py-5">
-      <div class="row">
+    <div class="container-fluid py-5" >
+      <div class="row" >
         <!-- LEFT SIDE: 50% Details -->
-        <div class="col-md-6 px-lg-5">
+        <div class="col-md-6 px-lg-5" style=" background: rgba(0, 0, 0, 0.643); color: white; font-family: Heebo; border-radius: 20px; padding: 30px;">
           <span class="badge bg-info text-dark mb-3" style="border-radius: 8px; padding: 8px 12px;">{{ event.event_category|lower }}</span>
 
-          <h1 class="display-5 fw-bold mb-3">{{ event.event_name }}</h1>
-          <p class="text-muted mb-4" style="font-size: 1.1rem;">{{ event.event_date }} at {{ event.event_time }}</p>
+          <h1 class="display-5 fw-bold mb-3" style="color: whitesmoke;">{{ event.event_name }}</h1>
+          <p style="font-size: 1.1rem; color: whitesmoke;">{{ event.event_date }} at {{ event.event_time }}</p>
 
           <div class="d-flex align-items-start text-muted mb-4">
             <i class="bi bi-geo-alt me-2 mt-1"></i>
-            <span style="font-size: 1.1rem;">{{ event.event_location }}</span>
+            <span style="font-size: 1.1rem; color: whitesmoke;">{{ event.event_location }}</span>
           </div>
 
           <hr class="my-4" />
 
           <h4 class="fw-bold">Description</h4>
-          <p class="lead text-secondary">{{ event.event_description }}</p>
+          <p style="font-size: 1.1rem;">{{ event.event_description }}</p>
 
           <div class="mt-5">
             <!-- <a href="{% url 'event_list' %}" class="btn btn-outline-primary px-4">Back to Events</a>
             <a href="{% url 'event_list' %}" class="btn btn-outline-secondary ms-2">Home</a> -->
             <button class="btn btn-primary px-4" onclick="window.history.back();">Back</button>
-            <a href="{% url 'user_events' %}" class="btn btn-outline-secondary ms-2">My events</a>
+            <a href="{% url 'user_events' %}" class="btn btn-info ms-2" style="color: white;">My events</a>
           </div>
         </div>
 
