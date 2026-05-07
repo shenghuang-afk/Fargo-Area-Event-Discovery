@@ -13,7 +13,6 @@
   <body>
     <div class="container-fluid py-5">
       <div class="row">
-        <!-- LEFT SIDE: 50% Details -->
         <div class="col-md-6 px-lg-5">
           <span class="badge bg-info text-dark mb-3" style="border-radius: 8px; padding: 8px 12px;">{{ event.event_category|lower }}</span>
 
@@ -36,33 +35,31 @@
           </div>
         </div>
 
-        <!-- RIGHT SIDE: 50% Map -->
         <div class="col-md-6">
-          <!-- ONLY one map div here -->
           <div id="event-map" style="height: 100%; width: 100%; border-radius: 20px; border: 1px solid #dee2e6;" class="shadow-sm"></div>
         </div>
       </div>
     </div>
 
-    <!-- Essential JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <script>
     var eventLat = parseFloat("{{ event.latitude }}");
     var eventLon = parseFloat("{{ event.longitude }}");
 
-    // Initialize map centered on the current event
-    var map = L.map('event-map').setView([eventLat, eventLon], 13);
+    
+    var map = L.map('event-map').setView([eventLat, eventLon], 15);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
-    // 1. Add the main marker for the current event
+    // main marker
     L.marker([eventLat, eventLon]).addTo(map)
       .bindPopup("<b>{{ event.event_name|escapejs }}</b><br>Right here!")
       .openPopup();
 
+      // rest of markers 
     {% for event in events %}
       var lat = parseFloat("{{  event.latitude|floatformat:"6" }}");
       var lon = parseFloat("{{  event.longitude|floatformat:"6" }}");
@@ -76,21 +73,6 @@
       });
 
       {% endfor %}
-      /*
-  <script>
-      var map = L.map('event-map').setView([46.8772, -96.7898], 12)
-      
-
-      var lat = parseFloat("{{  event.latitude|floatformat:"6" }}");
-      var lon = parseFloat("{{  event.longitude|floatformat:"6" }}");
-      var name = "{{ event.event_name|escapejs }}";
-      L.marker([lat, lon]).addTo(map).bindPopup(name);
-
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
-      }).addTo(map)
-      */
-
   </script>
   </body>
 {% endblock %}
