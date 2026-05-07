@@ -40,7 +40,7 @@
                       <option value="arts" {% if request.GET.event_category == "arts" %}selected{% endif %}>Arts</option>
                       <option value="technology" {% if request.GET.event_category == "technology" %}selected{% endif %}>Technology</option>
                       <option value="food" {% if request.GET.event_category == "food" %}selected{% endif %}>Food</option>
-                      <option value="education" {% if request.GET.event_category == "education" %}selected{% endif %}>Education</option>
+                      <option value="education"2 {% if request.GET.event_category == "education" %}selected{% endif %}>Education</option>
                       <option value="entertainment" {% if request.GET.event_category == "entertainment" %}selected{% endif %}>Entertainment</option>
                       <option value="business" {% if request.GET.event_category == "business" %}selected{% endif %}>Business</option>
                       <option value="charity" {% if request.GET.event_category == "charity" %}selected{% endif %}>Charity</option>
@@ -75,7 +75,7 @@
           {% include 'website/event_card.html' with event=event %}
         {% empty %}
           <div class="col-12 text-center py-5">
-            <div class="py-5">
+            <div class="py-5" style=" background: white; padding: 30px; border-radius: 20px; display: inline-block;">
               <i class="bi bi-calendar-x display-1 text-muted"></i>
               <h3 class="mt-3 text-muted">No events found</h3>
               <p class="text-secondary">Try adjusting your filters or check back later.</p>
